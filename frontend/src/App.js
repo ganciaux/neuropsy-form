@@ -2,11 +2,22 @@ import React from 'react';
 import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import './App.css';
+import { confirm } from './components/Confirm/ConfirmGlobal';
+import Button from 'react-bootstrap/Button';
 
 function App() {
+  const modal = async () => {
+    if (await confirm({ title: 'Title', body: 'Body' })) {
+      console.log('confirm OK');
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
+        <Button variant="primary" onClick={() => modal()}>
+          modal
+        </Button>
         <img src={logo} className="App-logo" alt="logo" />
         <Counter />
         <p>
