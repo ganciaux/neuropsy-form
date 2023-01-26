@@ -6,7 +6,6 @@ import Modal from 'react-bootstrap/Modal';
 function ConfirmDialog(props) {
   const title = props.title ? props.title : 'Modal heading';
   const body = props.body ? props.body : '';
-  console.log(props);
   return createPortal(
     <Modal show={props.open} onHide={props.onCancel}>
       <Modal.Header closeButton>
