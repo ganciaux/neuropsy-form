@@ -51,6 +51,7 @@ const BasicFormik = () => {
   async function onSubmit(formValues, onsSubmittingProps) {
     try {
       const response = await formSubmission(formValues);
+      console.log(response);
       onsSubmittingProps.resetForm();
     } catch (err) {
       console.error(err);

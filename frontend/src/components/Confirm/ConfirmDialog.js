@@ -1,26 +1,36 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 function ConfirmDialog(props) {
   const title = props.title ? props.title : 'Modal heading';
   const body = props.body ? props.body : '';
+  console.log(props);
   return createPortal(
-    <Modal show={props.open} onHide={props.onCancel}>
-      <Modal.Header closeButton>
-        <Modal.Title>{title}</Modal.Title>
-      </Modal.Header>
-      {body && <Modal.Body>{body}</Modal.Body>}
-      <Modal.Footer>
-        <Button variant="secondary" onClick={props.onCancel}>
-          Close
+    <Dialog
+      open={props.open}
+      onClose={props.onCancel}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          {body}
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={props.onCancel}>Disagree</Button>
+        <Button onClick={props.onConfirm} autoFocus>
+          Agree
         </Button>
-        <Button variant="primary" onClick={props.onConfirm}>
-          Save Changes
-        </Button>
-      </Modal.Footer>
-    </Modal>,
+      </DialogActions>
+    </Dialog>,
     document.body,
   );
 }
