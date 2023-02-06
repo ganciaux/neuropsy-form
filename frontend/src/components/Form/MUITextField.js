@@ -1,7 +1,7 @@
 import TextField from '@mui/material/TextField';
 import { ErrorMessage } from 'formik';
 
-function MUITextFiel({ id, label, formik, ...rest }) {
+function MUITextField({ id, label, formik, ...rest }) {
   return (
     <TextField
       id={id}
@@ -14,9 +14,10 @@ function MUITextFiel({ id, label, formik, ...rest }) {
       helperText={<ErrorMessage name={id} />}
       variant="outlined"
       margin="dense"
+      fullWidth
       {...rest}
     />
   );
 }
 
-export default MUITextFiel;
+export default MUITextField;

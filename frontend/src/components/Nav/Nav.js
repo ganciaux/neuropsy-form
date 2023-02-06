@@ -41,6 +41,12 @@ export default function Nav() {
             <Link to="/client" style={{ marginRight: '5px' }}>
               Client
             </Link>
+            <Link to="/clients" style={{ marginRight: '5px' }}>
+              Clients
+            </Link>
+            <Link to="/session" style={{ marginRight: '5px' }}>
+              Session
+            </Link>
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>

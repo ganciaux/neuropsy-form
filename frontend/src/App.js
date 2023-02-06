@@ -10,6 +10,8 @@ import MUIFormik from './page/test/MUIFormik';
 import PrivateRoutes from './components/Utils/PrivateRoutes';
 import CssBaseline from '@mui/material/CssBaseline';
 import Client from './components/Form/Client';
+import Clients from './page/clients/Clients';
+import Session from './components/Form/Session';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/formik" exact element={<Formik />} />
           <Route path="/MUIFormik" exact element={<MUIFormik />} />
           <Route path="/client" exact element={<Client />} />
+          <Route path="/clients" exact element={<Clients />} />
+          <Route path="/session" exact element={<Session />} />
           <Route path="/confirm" exact element={<Confirm />} />
         </Route>
         <Route path="/login" element={<Login />} />
