@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -12,13 +11,42 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useLocalStorage } from '../../components/Utils/useLocalStorage';
 
 const theme = createTheme();
 
 export default function SignIn() {
+  const [user, setUser] = useLocalStorage('user', null);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
+    console.log(data);
+    const token = localStorage.getItem('token');
+
+    var options = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, // notice the Bearer before your token
+      },
+      body: JSON.stringify({
+        email: 'ghis@ghis.com',
+        password: '12345',
+      }),
+    };
+
+    fetch('http://localhost:5001/api/users/login', options)
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (resJson) {
+        setUser(resJson);
+        return resJson;
+      });
+
     console.log({
       email: data.get('email'),
       password: data.get('password'),
@@ -28,7 +56,6 @@ export default function SignIn() {
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,

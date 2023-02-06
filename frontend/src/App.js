@@ -7,18 +7,24 @@ import Redux from './page/test/Redux';
 import Nav from './components/Nav/Nav';
 import Login from './page/user/Login';
 import MUIFormik from './page/test/MUIFormik';
+import PrivateRoutes from './components/Utils/PrivateRoutes';
+import CssBaseline from '@mui/material/CssBaseline';
+import Client from './components/Form/Client';
 
 function App() {
   return (
     <BrowserRouter>
+      <CssBaseline />
       <Nav />
       <Routes>
-        <Route path="/" exact element={<Redux />} />
-        <Route path="/formik" exact element={<Formik />} />
-        <Route path="/MUIFormik" exact element={<MUIFormik />} />
-
-        <Route path="/confirm" exact element={<Confirm />} />
-        <Route path="/login" exact element={<Login />} />
+        <Route element={<PrivateRoutes />}>
+          <Route path="/" exact element={<Redux />} />
+          <Route path="/formik" exact element={<Formik />} />
+          <Route path="/MUIFormik" exact element={<MUIFormik />} />
+          <Route path="/client" exact element={<Client />} />
+          <Route path="/confirm" exact element={<Confirm />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>
