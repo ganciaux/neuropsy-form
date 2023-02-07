@@ -27,4 +27,20 @@ app.use('/api/clients', clientsRoutes);
 
 app.use(errorHandler);
 
+const Trame = require('./models/trameModel');
+trame = new Trame();
+trame.label = 'trame 1';
+trame.description = 'trame description';
+trame.type = 'intro';
+trame.questions[
+  {
+    label: 'Q1',
+    order: 1,
+    unique: true,
+    report: 'your response is %',
+    answers: [{}],
+  }
+];
+//const res = trame.save().then(console.log('save success'));
+
 app.listen(port, () => console.log(`Server started on port ${port}`));
