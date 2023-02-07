@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,8 +7,14 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { logout } from '../../features/users/userSlice';
 
 export default function Nav() {
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -48,7 +54,18 @@ export default function Nav() {
               Session
             </Link>
           </Typography>
-          <Button color="inherit">Login</Button>
+          {user && (
+            <Button
+              color="inherit"
+              onClick={() => {
+                dispatch(logout());
+                navigate('/');
+              }}
+            >
+              Logout
+            </Button>
+          )}
+          {!user && <Button color="inherit">Login</Button>}
         </Toolbar>
       </AppBar>
     </Box>

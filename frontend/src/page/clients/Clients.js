@@ -13,7 +13,7 @@ function Clients() {
     <div>
       {clients.length}
       {clients.map((client) => {
-        return <div>{client.name}</div>;
+        return <div key={client._id}>{client.name}</div>;
       })}
     </div>
   );

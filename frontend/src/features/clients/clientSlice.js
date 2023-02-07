@@ -25,53 +25,62 @@ export const createClient = createAsyncThunk('clients/create', async (data) => {
   return await response.json();
 });
 
-export const getClients = createAsyncThunk('clients/get', async (data) => {
-  var requestOptions = {
-    method: 'GET',
-    headers: myHeaders,
-  };
-
-  const response = await fetch(
-    `http://127.0.0.1:5001/api/clients`,
-    requestOptions,
-  );
-  return await response.json();
-});
+export const getClients = createAsyncThunk(
+  'clients/get',
+  async (data, thunkAPI) => {
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+    };
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:5001/api/clients`,
+        requestOptions,
+      );
+      return await response.json();
+    } catch (error) {
+      return thunkAPI.rejectWithValue('Error...');
+    }
+  },
+);
 
 const clientSlice = createSlice({
   name: 'clients',
   initialState,
   reducers: {},
-  extraReducers: {
-    [createClient.pending]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(createClient.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.client = payload;
+    });
+    builder.addCase(createClient.pending, (state, action) => {
       state.isLoading = true;
-    },
-    [createClient.fulfilled]: (state, action) => {
-      console.log(action);
+      state.error = action.error;
+    });
+
+    builder.addCase(createClient.rejected, (state) => {
       state.isLoading = false;
-      state.client = action.payload;
-    },
-    [createClient.rejected]: (state) => {
-      state.isLoading = false;
-    },
-    [getClients.pending]: (state) => {
+    });
+
+    builder.addCase(getClients.pending, (state) => {
       state.isLoading = true;
       state.isSuccess = false;
       state.clients = [];
-    },
-    [getClients.fulfilled]: (state, action) => {
-      console.log(action);
+    });
+
+    builder.addCase(getClients.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.isSuccess = true;
-      state.clients = action.payload;
+      state.clients = payload;
       state.clientOptions = state.clients.map((element) => {
         return { value: element._id, label: element.name };
       });
-    },
-    [getClients.rejected]: (state) => {
+    });
+
+    builder.addCase(getClients.rejected, (state) => {
       state.isLoading = false;
       state.isSuccess = false;
-    },
+    });
   },
 });
 

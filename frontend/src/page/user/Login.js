@@ -12,16 +12,27 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useLocalStorage } from '../../components/Utils/useLocalStorage';
+import { useDispatch } from 'react-redux';
+import { userLogin } from '../../features/users/userSlice';
+import { useSelector } from 'react-redux';
 
 const theme = createTheme();
 
 export default function SignIn() {
-  const [user, setUser] = useLocalStorage('user', null);
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
+  //const [user, setUser] = useLocalStorage('user', null);
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-
+    //const data = new FormData(event.currentTarget);
+    const data = {
+      email: 'ghis@ghis.com',
+      password: '1234',
+    };
+    console.log('form', data);
+    dispatch(userLogin(data));
+    /*
     console.log(data);
     const token = localStorage.getItem('token');
 
@@ -51,6 +62,7 @@ export default function SignIn() {
       email: data.get('email'),
       password: data.get('password'),
     });
+    */
   };
 
   return (
